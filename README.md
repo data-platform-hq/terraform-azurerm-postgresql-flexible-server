@@ -1,5 +1,5 @@
-# Azure <> Terraform module
-Terraform module for creation Azure <>
+# Azure Database for PostgreSQL - Flexible Server Terraform module
+Terraform module for creation of Azure Database for PostgreSQL - Flexible Server
 
 ## Usage
 
@@ -66,4 +66,4 @@ No modules.
 
 ## License
 
-Apache 2 Licensed. For more information please see [LICENSE](https://github.com/data-platform-hq/terraform-azurerm<>/tree/master/LICENSE)
+Apache 2 Licensed. For more information please see [LICENSE](https://github.com/data-platform-hq/terraform-azurerm-postgresql-flexible-server/tree/main/LICENSE)
