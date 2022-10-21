@@ -26,7 +26,7 @@ resource "azurerm_postgresql_flexible_server" "this" {
 
 resource "azurerm_postgresql_flexible_server_database" "this" {
   for_each = {
-    for database in var.databases : "${database.name}" => database
+    for database in var.databases : database.name => database
     if database.name != null
   }
   name      = each.value.name
