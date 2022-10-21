@@ -23,3 +23,14 @@ resource "azurerm_postgresql_flexible_server" "this" {
   sku_name               = var.sku_name
   tags                   = var.tags
 }
+
+resource "azurerm_postgresql_flexible_server_database" "this" {
+  for_each = {
+    for database in var.databases : "${database.name}" => database
+    if database.name != null
+  }
+  name      = each.value.name
+  server_id = azurerm_postgresql_flexible_server.this.id
+  collation = each.value.collation
+  charset   = each.value.charset
+}

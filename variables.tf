@@ -91,3 +91,13 @@ variable "zone_id" {
   description = "The ID of the private DNS zone to create the PostgreSQL Flexible Server"
   default     = null
 }
+
+variable "databases" {
+  type = list(object({
+    name      = string
+    collation = string
+    charset   = string
+  }))
+  description = "List of databases to create"
+  default     = []
+}
