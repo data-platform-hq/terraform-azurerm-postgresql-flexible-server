@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/data-platform-hq/terraform-azurerm-postgresql-flexible-server/compare/v1.1.0...v1.2.0) (2022-10-30)
+
+
+### Features
+
+* add firewall rules ([b04bcf2](https://github.com/data-platform-hq/terraform-azurerm-postgresql-flexible-server/commit/b04bcf2ada549474125dd4c7cf108c83e16c188e))
+
 # [1.1.0](https://github.com/data-platform-hq/terraform-azurerm-postgresql-flexible-server/compare/v1.0.0...v1.1.0) (2022-10-21)
 
 
