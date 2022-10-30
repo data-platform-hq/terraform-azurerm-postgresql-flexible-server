@@ -101,3 +101,15 @@ variable "databases" {
   description = "List of databases to create"
   default     = []
 }
+
+variable "ip_rules" {
+  type        = map(string)
+  description = "Map of IP addresses permitted for access to DB"
+  default     = {}
+}
+
+variable "allow_azure_services" {
+  type        = bool
+  description = "Allow access from Azure services"
+  default     = true
+}

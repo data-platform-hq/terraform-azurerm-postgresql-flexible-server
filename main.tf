@@ -1,3 +1,7 @@
+locals {
+  ip_rules = { for e in [for k, ip in var.ip_rules : try(regex("/", ip), 0) != 0 ? { (k) = { start_ip_address = cidrhost(ip, 0), end_ip_address = cidrhost(ip, -1) } } : { (k) = { start_ip_address = ip, end_ip_address = ip } }] : keys(e)[0] => e[keys(e)[0]] }
+}
+
 resource "random_password" "password" {
   length           = 30
   special          = true
@@ -33,4 +37,21 @@ resource "azurerm_postgresql_flexible_server_database" "this" {
   server_id = azurerm_postgresql_flexible_server.this.id
   collation = each.value.collation
   charset   = each.value.charset
+}
+
+
+resource "azurerm_postgresql_flexible_server_firewall_rule" "this" {
+  for_each         = local.ip_rules
+  name             = "pgsql-firewall-rule-${var.project}-${var.env}-${var.location}-${each.key}"
+  server_id        = azurerm_postgresql_flexible_server.this.id
+  start_ip_address = each.value["start_ip_address"]
+  end_ip_address   = each.value["end_ip_address"]
+}
+
+resource "azurerm_postgresql_flexible_server_firewall_rule" "azure_services" {
+  count            = var.allow_azure_services ? 1 : 0
+  name             = "pgsql-firewall-rule-${var.project}-${var.env}-${var.location}-azure-services"
+  server_id        = azurerm_postgresql_flexible_server.this.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "0.0.0.0"
 }
