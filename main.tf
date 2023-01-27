@@ -57,6 +57,7 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "azure_services" {
 }
 
 data "azurerm_monitor_diagnostic_categories" "this" {
+  count       = var.enable_diagnostic_setting ? 1 : 0
   resource_id = azurerm_postgresql_flexible_server.this.id
 }
 
@@ -68,14 +69,14 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   log_analytics_destination_type = var.analytics_destination_type
 
   dynamic "enabled_log" {
-    for_each = data.azurerm_monitor_diagnostic_categories.this.log_category_types
+    for_each = data.azurerm_monitor_diagnostic_categories.this[0].log_category_types
     content {
       category = enabled_log.value
     }
   }
 
   dynamic "metric" {
-    for_each = data.azurerm_monitor_diagnostic_categories.this.metrics
+    for_each = data.azurerm_monitor_diagnostic_categories.this[0].metrics
     content {
       category = metric.value
     }
